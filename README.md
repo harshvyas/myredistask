@@ -20,7 +20,7 @@ sudo apt-get update -y && sudo apt-get install -y docker.io docker-compose git
 git clone https://github.com/harshvyas/myredistask.git && cd myredistask
 sh run.sh
 ```
-- Access the python app at `http://localhost:5000`
+- Access the python app at `http://<localhost | ipaddress>:15000`
 
 # Result
 
@@ -54,6 +54,8 @@ sh run.sh
 # Miscellaneous Step by Step Details
 
 <details>
+
+- Use `sudo` if needed
 
 ## 1. Clone 
 
@@ -135,7 +137,7 @@ docker-compose logs -f my_python_app
 
 ## 10. Validate from browser 
 
-- http://localhost:5000
+- http://localhost:15000
 
 ## 11. Sample Output from Python App logs after clicking buttons 1,2,3,4 in UI
 
