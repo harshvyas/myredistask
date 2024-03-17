@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Redis App</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 50px;
+        }
+        h1 {
+            margin-bottom: 30px;
+        }
+        .columns {
+            display: flex; /* Use flexbox for column layout */
+            justify-content: space-between; /* Evenly distribute columns */
+        }
+        .column {
+            flex-basis: 45%; /* Set width of columns */
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-bottom: 20px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 8px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+            text-align: center;
+            color: snow;
+        }
+    </style>
+</head>
+<body>
+    <h1>My Replication from Redis OSS to Redis Enterprise</h1>
+    <div class="columns">
+        <div class="column">
+            <h2>Redis OSS</h2>
+            <button onclick="loadFromRedis('oss')">1 <i class="fa-solid fa-arrow-right"></i> Load Sequential Data <i class="fa-solid fa-circle-up"></i></button>
+            <table id="ossNumbersTable">
+                <tbody>
+                    <!-- Numbers from Redis OSS will be populated here -->
+                </tbody>
+            </table>
+        </div>
+        <div><h2> <i class="fa-solid fa-angles-right"></i> </h2></div>
+        <div class="column">
+            <h2>Redis Enterprise</h2>
+            <button onclick="loadFromRedis('enterprise')">2 <i class="fa-solid fa-arrow-right"></i> Load Sequential Reversed Data <i class="fa-solid fa-circle-down"></i></button>
+            <table id="enterpriseNumbersTable">
+                <tbody>
+                    <!-- Numbers from Redis Enterprise will be populated here -->
+                </tbody>
+            </table>
+        </div>
+        <div><h2> <i class="fa-solid fa-grip-lines-vertical"></i> </h2></div>
+        <div class="column">
+            <h2>Redis OSS</h2>
+            <button onclick="loadRandomFromRedis('ossRandom')">3 <i class="fa-solid fa-arrow-right"></i> Load Random Data <i class="fa-solid fa-circle-up"></i></button>
+            <table id="ossRandomNumbersTable">
+                <tbody>
+                    <!-- Numbers from Redis OSS will be populated here -->
+                </tbody>
+            </table>
+        </div>
+        <div><h2> <i class="fa-solid fa-angles-right"></i> </h2></div>
+        <div class="column">
+            <h2>Redis Enterprise</h2>
+            <button onclick="loadRandomFromRedis('enterpriseRandom')">4 <i class="fa-solid fa-arrow-right"></i> Load Random Reversed Data <i class="fa-solid fa-circle-down"></i></button>
+            <table id="enterpriseRandomNumbersTable">
+                <tbody>
+                    <!-- Numbers from Redis Enterprise will be populated here -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        function loadFromRedis(source) {
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    var numbers = JSON.parse(this.responseText);
+                    var numbersTable = source === 'oss' ? document.getElementById("ossNumbersTable").getElementsByTagName('tbody')[0] : document.getElementById("enterpriseNumbersTable").getElementsByTagName('tbody')[0];
+                    numbersTable.innerHTML = "";
+                    for (var i = 0; i < numbers.length; i++) {
+                        var row = numbersTable.insertRow(-1);
+                        row.insertCell(0).textContent = numbers[i][0];
+                        var shade = source === 'oss' ? 255 - (i + 10) * 2 : (i + 10) * 2;
+                        var color = 'rgb('+ shade + ', 0, 0)';
+                        row.style.background = color;
+                    }
+                }
+            };
+            var url = source === 'oss' ? "/load-sequential-redis-oss" : "/load-sequential-redis-enterprise";
+            xhttp.open("GET", url, true);
+            xhttp.send();
+        }
+
+        function loadRandomFromRedis(source) {
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    var numbers = JSON.parse(this.responseText);
+                    var numbersTable = source === 'ossRandom' ? document.getElementById("ossRandomNumbersTable").getElementsByTagName('tbody')[0] : document.getElementById("enterpriseRandomNumbersTable").getElementsByTagName('tbody')[0];
+                    numbersTable.innerHTML = "";
+                    for (var i = 0; i < numbers.length; i++) {
+                        var row = numbersTable.insertRow(-1);
+                        row.insertCell(0).textContent = numbers[i][0];
+                        var shade = source === 'ossRandom' ? 255 - (i + 10) * 2 : (i + 10) * 2;
+                        var color = 'rgb(0, 0, ' + shade + ')';
+                        row.style.background = color;
+                    }
+                }
+            };
+            var url = source === 'ossRandom' ? "/load-random-redis-oss" : "/load-random-redis-enterprise";
+            xhttp.open("GET", url, true);
+            xhttp.send();
+        }
+    </script>
+</body>
+</html>

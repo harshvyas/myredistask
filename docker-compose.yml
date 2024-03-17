@@ -1,0 +1,55 @@
+services:
+  my_redis_oss:
+    image: redis
+    ports:
+      - "10001:10001"
+    command: --port 10001
+    networks:
+      - redis_network
+    volumes:
+      - redis_oss_data:/data
+
+  my_memtier_benchmark:
+    image: redislabs/memtier_benchmark
+    command: memtier_benchmark --server=my_redis_oss --port=10001 --protocol=redis --data-size=128 --ratio=1:1 --key-pattern=S:S --key-minimum=1 --key-maximum=1000 --clients=10 --threads=2 --pipeline=1 --requests=10000
+    networks:
+      - redis_network
+    depends_on:
+      - my_redis_oss
+
+  my_redis_enterprise:
+    image: redislabs/redis
+    cap_add:
+      - SYS_RESOURCE
+    ports:
+      - "8443:8443"
+      - "9443:9443"
+      - "12000:12000" 
+    networks:
+      - redis_network
+    volumes:
+      - redis_enterprise_data:/data
+
+  my_python_app:
+    build: ./python_app
+    environment:
+      - REDIS_OSS_HOST=my_redis_oss
+      - REDIS_OSS_PORT=10001
+      - REDIS_ENTERPRISE_HOST=my_redis_enterprise
+      - REDIS_ENTERPRISE_PORT=12000
+      - REDIS_ENTERPRISE_PASSWORD=admin
+    ports:
+      - "5000:5000"
+    networks:
+      - redis_network
+    depends_on:
+      - my_redis_oss
+      - my_redis_enterprise
+
+volumes:
+  redis_oss_data:
+  redis_enterprise_data:
+
+networks:
+  redis_network:
+    driver: bridge
