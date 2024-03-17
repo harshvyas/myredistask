@@ -99,4 +99,4 @@ def load_random_redis_enterprise():
     return json.dumps(reversed_numbers)
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000)
+    app.run(host='0.0.0.0', port=15000)
