@@ -94,7 +94,7 @@ docker-compose logs my_memtier_benchmark | more
 ## 7. Check Memtier Result
 
 ```bash
-docker exec -it `docker ps -aqf "name=my_redis_oss"` bash -c 'redis-cli -p 10001 KEYS "*"' > keys.txt && cat keys.txt
+docker exec -it `docker ps -aqf "name=my_redis_oss"` bash -c 'redis-cli -p 10001 KEYS "memtier-*"' > keys.txt && cat keys.txt
 ```
 
 ## 8. Setup Cluster and Create Database in Redis Enterprise cluster.local to replicate from Redis OSS
