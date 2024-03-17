@@ -7,6 +7,20 @@
   - Inserts 1-100 sequentially in Redis OSS and prints in reverse order from Redis Enterprise
   - Inserts 100 random values in Redis OSS and prints in reverse order from Redis Enterprise
 
+# Run
+
+- Pre-requisites: Docker + Docker Compose + Git
+```bash
+# On Ubuntu
+apt-get update -y && apt-get install -y docker.io docker-compose git
+```
+
+- Run the following command in a linux shell 
+```bash
+git clone https://github.com/harshvyas/myredistask.git && cd myredistask && sh run.sh
+```
+- Access the python app at `http://localhost:5000`
+
 # Result
 
 - Logs (Click to Zoom)
@@ -35,22 +49,6 @@
   - Lists - Cons: 
     - Printing in reverse would require additional logic in the python code 
     - O(N) complexity for retrieval of full dataset
-
-# Run
-
-- Pre-requisites: Docker + Docker Compose + Git
-```bash
-# On Ubuntu
-apt-get update -y && apt-get install -y docker.io docker-compose git
-```
-
-- Run the following command in a linux shell 
-```bash
-git clone https://github.com/harshvyas/myredistask.git && cd myredistask && sh run.sh
-```
-- Access the python app at `http://localhost:5000`
-
----
 
 # Miscellaneous Step by Step Details
 
