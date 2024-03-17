@@ -38,10 +38,11 @@
 
 # Run
 
-- Pre-requisites: 
-  - Docker
-  - Docker Compose
-  - Git
+- Pre-requisites: Docker + Docker Compose + Git
+```bash
+# On Ubuntu
+apt-get update -y && apt-get install -y docker.io docker-compose git
+```
 
 - Run the following command in a linux shell 
 ```bash
