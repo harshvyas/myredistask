@@ -15,7 +15,7 @@
 sudo apt-get update -y && sudo apt-get install -y docker.io docker-compose git
 ```
 
-- Run the following command in a linux shell 
+- Run the following command in a Unix Shell 
 ```bash
 git clone https://github.com/harshvyas/myredistask.git && cd myredistask
 sh run.sh
