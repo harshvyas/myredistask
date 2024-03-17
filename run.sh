@@ -74,19 +74,23 @@ docker exec -it `docker ps -aqf "name=my_redis_enterprise"` bash -c '\
     -H "Content-type: application/json" \
     -d '\''{"name":"test","port":12000,"memory_size":107374182,"replica_sources":[{"uri":"redis://my_redis_oss:10001","server_cert":""}],"replica_sync":"enabled"}'\'''
 
+# dump keys from Redis OSS created by Memtier
+echo "Loading all memtier keys from Redis OSS into keys.txt"
+docker exec -it `docker ps -aqf "name=my_redis_oss"` bash -c 'redis-cli -p 10001 KEYS "memtier-*"' > keys.txt && cat keys.txt
+
 # validate python app endpoints
 echo "---------------------------------------"
 echo "Validating Python app endpoints..."
 sleep 30
-curl --retry 10 --retry-all-errors --retry-delay 5 --fail -s -o /dev/null -w "%{http_code}" http://localhost:5000 && echo " - Python app is running"
+curl --retry 10 --retry-delay 5 --fail -s -o /dev/null -w "%{http_code}" http://localhost:5000 && echo " - Python app is running"
 echo "---------------------------------------"
-curl --retry 10 --retry-all-errors --retry-delay 5 --fail localhost:5000/load-sequential-redis-oss && echo " - Sequential load test for Redis OSS"
+curl --retry 10 --retry-delay 5 --fail localhost:5000/load-sequential-redis-oss && echo " - Sequential load test for Redis OSS"
 echo "---------------------------------------"
-curl --retry 10 --retry-all-errors --retry-delay 5 --fail localhost:5000/load-sequential-redis-enterprise && echo " - Sequential load test for Redis Enterprise"
+curl --retry 10 --retry-delay 5 --fail localhost:5000/load-sequential-redis-enterprise && echo " - Sequential load test for Redis Enterprise"
 echo "---------------------------------------"
-curl --retry 10 --retry-all-errors --retry-delay 5 --fail localhost:5000/load-random-redis-oss && echo " - Random load test for Redis OSS"
+curl --retry 10 --retry-delay 5 --fail localhost:5000/load-random-redis-oss && echo " - Random load test for Redis OSS"
 echo "---------------------------------------"
-curl --retry 10 --retry-all-errors --retry-delay 5 --fail localhost:5000/load-random-redis-enterprise && echo " - Random load test for Redis Enterprise"
+curl --retry 10 --retry-delay 5 --fail localhost:5000/load-random-redis-enterprise && echo " - Random load test for Redis Enterprise"
 echo "---------------------------------------"
 
 echo "All done. Enjoy!"
