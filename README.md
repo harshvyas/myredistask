@@ -12,12 +12,13 @@
 - Pre-requisites: Docker + Docker Compose + Git
 ```bash
 # On Ubuntu
-apt-get update -y && apt-get install -y docker.io docker-compose git
+sudo apt-get update -y && sudo apt-get install -y docker.io docker-compose git
 ```
 
 - Run the following command in a linux shell 
 ```bash
-git clone https://github.com/harshvyas/myredistask.git && cd myredistask && sh run.sh
+git clone https://github.com/harshvyas/myredistask.git && cd myredistask
+sh run.sh
 ```
 - Access the python app at `http://localhost:5000`
 
