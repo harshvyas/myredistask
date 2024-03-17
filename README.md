@@ -10,11 +10,10 @@
 # Result
 
 - Logs (Click to Zoom)
-![screenshot_2024-03-17_16 19 17](https://github.com/harshvyas/myredistask/assets/2585335/b077b412-c823-48c9-bfeb-68c5a1356474)
+![screenshot_2024-03-17_16 19 17](https://github.com/harshvyas/myredistask/assets/2585335/49e8eded-7cc7-4d74-8c10-8cfdbf4c5d6b)
 
 - WebApp (Click to Zoom)
-![screenshot_2024-03-17_16 13 42](https://github.com/harshvyas/myredistask/assets/2585335/2784959b-af04-4854-a36d-1cfc899a53a2)
-
+![screenshot_2024-03-17_16 13 42](https://github.com/harshvyas/myredistask/assets/2585335/dcb3f28f-d7df-4473-8b9f-4cdf22fb7527)
 
 # Implementation
 
