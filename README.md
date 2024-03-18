@@ -37,11 +37,11 @@ sh run.sh
   - Memtier loads 1000 keys into Redis OSS
   - Redis Enterprise cluster created with database as the target replica of Redis OSS source database accessible on port 10001
   
-- Python App built using Flask loads/reterives sequential and random values in Redis using Sorted Set data structure 
+- Python App built using Flask, loads/reterives sequential and random values in Redis using Sorted Set data structure 
   - At startup
     - Establishes connection to both Redis OSS and Redis Enterprise on startup 
-    - Inserts all (1-100) sequential numbers into Redis OSS as sorted set using `ZADD` in a single network request
-    - Inserts all 100 random numbers between 1 and 100 into Redis OSS as sorted set using `ZADD` in a single network request
+    - Inserts all (1-100) sequential numbers with scores ranging from 1-100 into Redis OSS as sorted set using `ZADD` in a single network request
+    - Inserts all 100 random numbers between 1 and 100 with scores assigned based on the order of insertion into Redis OSS as sorted set using `ZADD` in a single network request
   - `ZRANGE` and `ZREVRANGE` makes it simple and efficient to get data in both ascending and descending order directly from Redis
   - Sorted Set - Cons: 
     - Slightly higher memory overhead for storing of scores alongside elements
