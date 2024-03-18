@@ -23,7 +23,7 @@ sh run.sh
 - Access the python app at `http://<localhost | ipaddress>:15000`
 
 # Result
-[test](python_app/static/perm.webm)
+[test](python_app/static/myredistask.gif)
 - Logs (Click to Zoom)
 ![screenshot_2024-03-17_16 19 17](https://github.com/harshvyas/myredistask/assets/2585335/49e8eded-7cc7-4d74-8c10-8cfdbf4c5d6b)
 
