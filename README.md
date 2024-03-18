@@ -24,7 +24,8 @@ sh run.sh
 
 # Result
 
-- ![myredistask](python_app/static/myredistask.gif)
+- Recording
+![myredistask](python_app/static/myredistask.gif)
 
 - Logs (Click to Zoom)
 ![screenshot_2024-03-17_16 19 17](https://github.com/harshvyas/myredistask/assets/2585335/49e8eded-7cc7-4d74-8c10-8cfdbf4c5d6b)
@@ -53,10 +54,12 @@ sh run.sh
     - Printing in reverse would require additional logic in the python code 
     - O(N) complexity for retrieval of full dataset
 
-# Miscellaneous Step by Step Details
+# Miscellaneous
 
 <details>
 
+  <summary>Step by Step Details</summary>
+  
 - Use `sudo` if needed
 
 ## 1. Clone 
