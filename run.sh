@@ -76,7 +76,14 @@ docker exec -it `docker ps -aqf "name=my_redis_enterprise"` bash -c '\
 
 # dump keys from Redis OSS created by Memtier
 echo "Loading all memtier keys from Redis OSS into keys.txt"
-docker exec -it `docker ps -aqf "name=my_redis_oss"` bash -c 'redis-cli -p 10001 KEYS "memtier-*"' > keys.txt && cat keys.txt
+docker exec -it `docker ps -aqf "name=my_redis_oss"` bash -c 'redis_conn="redis-cli -p 10001 --raw"; cursor=0; \
+    while [ true ]; do \
+        result=$($redis_conn -p 10001 SCAN $cursor MATCH "memtier-*"); \
+        cursor=$(echo $result | cut -d" " -f1 | tr -d "[:space:]"); \
+        keys=$(echo $result | cut -d" " -f2-); \
+        for key in $keys; do echo "Key: $key"; done; \
+        if [ "$cursor" -eq 0 ]; then break; fi; \
+    done' > keys.txt && sort -t"-" -k2n keys.txt
 
 # validate python app endpoints
 echo "---------------------------------------"
